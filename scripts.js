@@ -1,4 +1,5 @@
 // Set some initial variables
+
 var ethervote, ethervoteContract, proposalHash, totalVotes, proposal, totalPro, totalAgainst;
 var voteMap = {};
 
@@ -27,6 +28,7 @@ function init() {
         document.getElementById("new-proposal-link").style.display = "block";
     });
     newProposalInput.addEventListener('blur', newProposal);
+
 
     // Checks Web3 support
     if(typeof web3 !== 'undefined' && typeof Web3 !== 'undefined') {
@@ -139,6 +141,7 @@ function init() {
 
 }
 
+
 function watchVotes() {        
     // Set the texts and variables
     document.getElementById('status').textContent = 'Calculating votes...';
@@ -148,12 +151,14 @@ function watchVotes() {
         document.getElementById('status').textContent = "";
     }, 3000);
 
+
     // LogVote is an event on the contract. Read all since block 1 million
     var logVotes = ethervote.LogVote({proposalHash: proposalHash}, {fromBlock: startingBlock});
     
     // Wait for the events to be loaded
     console.time('watch')
     logVotes.watch(function(error, res){
+
         console.log('event received');
 
         // Each vote will execute this function 
@@ -173,6 +178,7 @@ function watchVotes() {
                     document.getElementById('vote-against').classList.add("pressed");
                 }
             }
+
 
             calculateVotes();
             console.timeEnd('watch');
@@ -296,6 +302,3 @@ function newProposal() {
     var newProposalLink = document.getElementById('new-proposal-link');
     newProposalLink.href = '?proposal=' + encodeURI(newProposal.value);
 }
-
-
-
