@@ -32,24 +32,10 @@ function init() {
 
 
     // Checks Web3 support
-    if(typeof web3 !== 'undefined' && typeof Web3 !== 'undefined') {
-        // If there's a web3 library loaded, then make your own web3
-        web3 = new Web3(web3.currentProvider);
-    } else if (typeof Web3 !== 'undefined') {
-        // If there isn't then set a provider
+    if(typeof web3 !== 'undefined')
+        var web3 = new Web3(web3.currentProvider);
+    else
         web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    } else if(typeof web3 == 'undefined') {
-        // If there is neither then this isn't an ethereum browser
-        document.getElementById("results").style.display = "none";
-        document.getElementById("see-results").style.display = "none";
-        document.getElementById("vote-support").style.display = "none";
-        document.getElementById("vote-against").style.display = "none";
-        document.getElementById("subtitle").style.display = "none";
-        document.getElementById("proposal").textContent = "Give Stakers a Voice";
-        var message = document.getElementById("message");
-        message.style.display = "block";
-        return;    
-    }
     
     // Check if there are available accounts
     web3.eth.getAccounts(function(e,accounts){ 
